@@ -1,0 +1,42 @@
+<!--
+* @File Name:      SL_AccList
+* @Description:    Lightning component for displaying account records in datatable
+* @group:          Lightning Component Bundle
+* @Author:         Rabin
+* @Modification Log  : 
+______________________________________________________________________________________
+* Ver       Date            Modification
+* 1.0       2021-03-06       Created the file/classes
+-->
+<aura:component controller="SL_AccList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="data" type="Account[]"/>
+    <aura:attribute name="filteredData" type="Account[]"/>
+    <aura:attribute name="columns" type="Object[]"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="filter" type="String" />
+    <div class="slds-p-around_medium">
+        <h1 class="slds-text-heading_large">Financial Services Account Listing</h1>
+    </div>
+    <div>
+        <lightning:input
+                         variant="label-hidden"
+                         placeholder="Search Account Name"
+                         type="text"
+                         value="{! v.filter }"
+                         onchange="{! c.onSearchPhrase }" />
+        
+    </div>
+    <div style="height: 500px">
+        <lightning:datatable aura:id="acctList"
+                             keyField="Id"
+                             columns="{! v.columns }"
+                             data="{! v.filteredData }"
+                             hideCheckboxColumn="true"
+                             sortedBy="{!v.sortBy}"
+                             sortedDirection="{!v.sortDirection}"
+                             onsort="{!c.handleSort}"
+                             onsave="{! c.onSave }"/>
+    </div>
+</aura:component>
